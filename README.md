@@ -5,6 +5,6 @@
 - "amici dell'amico": elementi, connessi all'amico, che interagiranno con esso
 
 ### Todo:
-- [] Definire quali elementi andranno ad interagire con l'amico
-- [] Implementare il codice per interagire con l'amico
-- [] Connettere effettivamente l'amico ai suoi amici
+- [ ] Definire quali elementi andranno ad interagire con l'amico
+- [ ] Implementare il codice per interagire con l'amico
+- [ ] Connettere effettivamente l'amico ai suoi amici
