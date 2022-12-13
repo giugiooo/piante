@@ -34,3 +34,4 @@ getPh()
 - displayPh(float pH)
 - displayHumidity(float humidity)
 
+# Logica
