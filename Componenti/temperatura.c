@@ -12,11 +12,9 @@ void initializeTemperatureModule(){
     REF_A_enableReferenceVoltage();
 
     /* costanti strane per calibrare costantemente la temperatura. Vengono usate per i calcoli dopo */
-    cal30 = SysCtl_getTempCalibrationConstant(SYSCTL_2_5V_REF,
-                SYSCTL_30_DEGREES_C);
-        cal85 = SysCtl_getTempCalibrationConstant(SYSCTL_2_5V_REF,
-                SYSCTL_85_DEGREES_C);
-        calDifference = cal85 - cal30;
+    cal30 = SysCtl_getTempCalibrationConstant(SYSCTL_2_5V_REF, SYSCTL_30_DEGREES_C);
+    cal85 = SysCtl_getTempCalibrationConstant(SYSCTL_2_5V_REF, SYSCTL_85_DEGREES_C);
+    calDifference = cal85 - cal30;
 
     /* Initialising ADC (MCLK/1/1) with temperature sensor routed */
     ADC14_enableModule();
@@ -26,8 +24,7 @@ void initializeTemperatureModule(){
          * mode).
          */
     ADC14_configureSingleSampleMode(ADC_MEM0, true);
-    ADC14_configureConversionMemory(ADC_MEM0, ADC_VREFPOS_INTBUF_VREFNEG_VSS,
-    ADC_INPUT_A22, false);
+    ADC14_configureConversionMemory(ADC_MEM0, ADC_VREFPOS_INTBUF_VREFNEG_VSS, ADC_INPUT_A22, false);
 
 }
 
