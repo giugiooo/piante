@@ -60,8 +60,8 @@ void loop(){
 	int currentValue = analogRead(sensorPin);
 	int diffValue = HistoryValue - currentValue;
 	if((abs(diffValue) >= 10) || ((currentValue == 0) && (HistoryValue != 0 ))){
-		int percentValue = levelConverter(currentValue);
-		sprintf(printBuffer, "PIN %s level is %04d)\n", analogPin.c_str(), currentValue);
+		int percentValue = levelConverter(currentValue, tapWater);
+		sprintf(printBuffer, "PIN %s level is %04d)\n", analogPin.c_str(), percentValue);
 		Serial.print(printBuffer);
 		HistoryValue = currentValue;
 	}
