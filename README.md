@@ -18,14 +18,14 @@ The features implemented and tested in the project are the following:
 
 ### Hardware:
 #### Launchpad (temperature sensor, brightness sensor, display, button)
-![81GuSUkudzL](https://user-images.githubusercontent.com/125813273/220139784-b5718920-77d2-40c6-93ea-872a60726643.jpg)
- 
+![7f2e25b1-6b96-4478-a5f6-b2deba43b8f4](https://user-images.githubusercontent.com/125813273/220143137-08dbf299-6d40-4c98-8e08-ed4ff01ec917.jpg)
+
 #### water level sensor
-![waterlevelsensor](https://user-images.githubusercontent.com/125813273/220141817-7cab88d9-e783-4cad-9ce1-f1c89f1a9d8f.jpg)
+![8576540a-a3fd-466c-9a5e-a5127a94cb02](https://user-images.githubusercontent.com/125813273/220143063-c5ae17d9-58fa-4e3f-a475-b6e7afbd0945.jpg)
 
 #### irrigation system
 #### esp8266mod
-![Unknown](https://user-images.githubusercontent.com/125813273/220141856-1f3300bc-05b2-4262-a33d-b47dd46d8edc.jpeg)
+![b46767ec-107c-45f6-a34b-3b3b8a16733a](https://user-images.githubusercontent.com/125813273/220142992-f34b25a0-e398-498a-a5af-964661af01b0.jpg)
 
 #### humidity sensor
 #### breadboard and cables
