@@ -4,10 +4,26 @@ This project consists in a greenhouse connected to a display which provides info
 Our aim? Keeping a plant alive! 
 
 ## FEATURES:
+The features implemented and tested in the project are the following:
+
+- Checks the temperature inside the greenhouse;
+- Checks the brightness of the environment;
+- checks if the soil is humid enough; 
+- erogates water from a water tank when the plant needs it;
+- notifies the plant owner when the water tank is empty;
+- displays informations about temperature/brightness of the environment and level of water in the tank
+- if the tank is almost empty a red led lights up in the greenhouse  
 
 ## REQUIREMENTS:
-### Hardware
-### software
+
+### Hardware:
+#### Launchpad (temperature sensor, brightness sensor, display, button)
+#### water level sensor
+#### irrigation system
+#### esp8266mod
+#### breadboard and cables
+
+### Software
 
 ## USER INTERACTION
 ### Hardware/software interaction:
