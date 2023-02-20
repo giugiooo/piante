@@ -82,15 +82,6 @@ void _hwInit()
     CS_initClockSignal(CS_SMCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1);
     CS_initClockSignal(CS_ACLK, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);
 
-    // Initialize main interrupt stuff
-    Timer_A_configureUpMode(TIMER_A1_BASE, &mainLoopTimerUpConfig);
-    //Interrupt_enableSleepOnIsrExit();
-    Interrupt_enableInterrupt(INT_TA1_0);
-    Timer_A_startCounter(TIMER_A1_BASE, TIMER_A_UP_MODE);
-    //Interrupt_enableMaster(); //enable master interrupts*/
-
-
-
     _graphicsInit();
     _ledInit();
     _lightSensorInit();
@@ -101,6 +92,14 @@ void _hwInit()
 /*
  * Main function
  */
+void _enableInterrupts(){
+    // Initialize main interrupt stuff
+        Timer_A_configureUpMode(TIMER_A1_BASE, &mainLoopTimerUpConfig);
+        //Interrupt_enableSleepOnIsrExit();
+        Interrupt_enableInterrupt(INT_TA1_0);
+        Timer_A_startCounter(TIMER_A1_BASE, TIMER_A_UP_MODE);
+        //Interrupt_enableMaster(); //enable master interrupts*/
+}
 
 
 int main(void)
@@ -108,17 +107,8 @@ int main(void)
 
     _hwInit();
 
-    GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
-            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Temperature:", AUTO_STRING_LENGTH, 64, 12, OPAQUE_TEXT);
 
-
-            GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
-            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Greenhouse", AUTO_STRING_LENGTH, 64, 62, OPAQUE_TEXT);
-            Graphics_drawStringCentered(&g_sContext, (int8_t *) "humidity", AUTO_STRING_LENGTH, 64, 72, OPAQUE_TEXT);
-
-    GrContextFontSet(&g_sContext, &g_sFontCmss36b);
-    //Graphics_drawStringCentered(&g_sContext, (int8_t *) "50%", AUTO_STRING_LENGTH, 64, 92, OPAQUE_TEXT);
-
+    _enableInterrupts();
 
     while (1)
     {
@@ -130,22 +120,62 @@ int main(void)
 
 //main timer handler
 int temperature;
-const int DELAY = 10;
+int water_level;
+const int SAMPLE_DELAY = 10; //ogni quanto fare il sampling
+const int CHANGE_DISPLAY_DELAY = 30; //ogni quanto cambia la schermata
 int timer = 0;
+int timer2 = CHANGE_DISPLAY_DELAY+1;
 int STATE = 0; //1 for temperature and water level, 2 for humidity and the other thing
 char buffer[6];
 void TA1_0_IRQHandler(void)
 {
 
-    if (timer > DELAY){
-        temperature = _temperatureGetTemperature();
-            sprintf(buffer, "%d", temperature);
-            Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 92, OPAQUE_TEXT);
-            timer = 0;
+    if (timer2 > CHANGE_DISPLAY_DELAY){
+        STATE = (STATE == 0) ? 1 : 0; //cambia lo stato
+        timer2 = 0;
+
+        Graphics_clearDisplay(&g_sContext);
+        if (STATE == 0){
+            GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Temperature:", AUTO_STRING_LENGTH, 64, 12, OPAQUE_TEXT);
+            GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Greenhouse", AUTO_STRING_LENGTH, 64, 62, OPAQUE_TEXT);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) "humidity", AUTO_STRING_LENGTH, 64, 72, OPAQUE_TEXT);
+        }
+        if (STATE == 1){
+            GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Water level:", AUTO_STRING_LENGTH, 64, 12, OPAQUE_TEXT);
+            GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Terrain", AUTO_STRING_LENGTH, 64, 62, OPAQUE_TEXT);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) "humidity", AUTO_STRING_LENGTH, 64, 72, OPAQUE_TEXT);
+        }
+
+        timer = SAMPLE_DELAY +1; //aggiornamento forzato
+        GrContextFontSet(&g_sContext, &g_sFontCmss36b); //font grande in modo che le successive volte che scrivi qualcosa vengono fuori i numeri grandi
+
     }
 
+    if (timer > SAMPLE_DELAY){
+
+        if (STATE == 0){
+            temperature = _temperatureGetTemperature();
+            sprintf(buffer, "%d", (temperature-32)*5/9);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
+            timer = 0;
+
+            //todo: aggiungere
+        }
+        if (STATE == 1){
+            water_level = 100;
+            sprintf(buffer, "%d%", water_level);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
+            timer = 0;
+        }
+
+    }
 
     Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_0);
     timer++;
+    timer2++;
 }
 
