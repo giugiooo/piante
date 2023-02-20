@@ -5,8 +5,6 @@ Our aim? Keeping a plant alive!
 
 ## FEATURES:
 
-## HOW DOES IT WORK:
-
 ## REQUIREMENTS:
 ### Hardware
 ### software
