@@ -35,7 +35,7 @@
 //
 //****************************************************************************
 
-#include <modules/temperature/HAL_I2C.h>
+#include <modules/i2c/HAL_I2C.h>
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 
 

@@ -35,7 +35,7 @@
 //
 //****************************************************************************
 
-#include <modules/temperature/HAL_I2C.h>
+#include <modules/i2c/HAL_I2C.h>
 #include <modules/temperature/HAL_TMP006.h>
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include "math.h"
@@ -58,7 +58,7 @@ void TMP006_init(void)
     I2C_write16(TMP006_WRITE_REG, TMP006_RST);
 
     volatile int i;
-    for (i=10000; i>0;i--);
+    for (i=100; i>0;i--);
 
     /* Power-up and re-enable device */
     I2C_write16(TMP006_WRITE_REG, TMP006_POWER_UP | TMP006_CR_2);
