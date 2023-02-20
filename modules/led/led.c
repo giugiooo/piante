@@ -14,7 +14,7 @@ Timer_A_CompareModeConfig compareConfig_PWM = {
 const Timer_A_UpModeConfig upConfig = {
         TIMER_A_CLOCKSOURCE_SMCLK,                      // SMCLK = 3 MhZ
         TIMER_A_CLOCKSOURCE_DIVIDER_12,         // SMCLK/12 = 250 KhZ
-        1000,                                  // 40 ms tick period
+        100000,                                  // 40 ms tick period
         TIMER_A_TAIE_INTERRUPT_DISABLE,         // Disable Timer interrupt
         TIMER_A_CCIE_CCR0_INTERRUPT_DISABLE,    // Disable CCR0 interrupt
         TIMER_A_DO_CLEAR                        // Clear value
@@ -22,9 +22,9 @@ const Timer_A_UpModeConfig upConfig = {
 
 
 void _ledSetRGB(int r, int g, int b){
-    Timer_A_setCompareValue(TIMER_A0_BASE,  TIMER_A_CAPTURECOMPARE_REGISTER_3, r);
-    Timer_A_setCompareValue(TIMER_A0_BASE,  TIMER_A_CAPTURECOMPARE_REGISTER_1, g);
-    Timer_A_setCompareValue(TIMER_A2_BASE,  TIMER_A_CAPTURECOMPARE_REGISTER_1, b);
+    Timer_A_setCompareValue(TIMER_A0_BASE,  TIMER_A_CAPTURECOMPARE_REGISTER_3, r*100);
+    Timer_A_setCompareValue(TIMER_A0_BASE,  TIMER_A_CAPTURECOMPARE_REGISTER_1, g*100);
+    Timer_A_setCompareValue(TIMER_A2_BASE,  TIMER_A_CAPTURECOMPARE_REGISTER_1, b*100);
 }
 
 void _ledInit()

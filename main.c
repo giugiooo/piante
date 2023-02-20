@@ -118,10 +118,10 @@ int main(void)
 
 
 //main timer handler
-int temperature;
+int temperature = 20;
 int water_level;
-const int SAMPLE_DELAY = 5; //ogni quanto fare il sampling
-const int CHANGE_DISPLAY_DELAY = 15; //ogni quanto cambia la schermata
+const int SAMPLE_DELAY = 10; //ogni quanto fare il sampling
+const int CHANGE_DISPLAY_DELAY = 45; //ogni quanto cambia la schermata
 int timer = 0;
 int timer2 = CHANGE_DISPLAY_DELAY+1;
 int STATE = 0; //1 for temperature and brightness, 2 for terrain humidity and water level
@@ -157,8 +157,8 @@ void TA1_0_IRQHandler(void)
 
         if (STATE == 0){
             lux = _lightGetLuxValue();
-            temperature = _temperatureGetTemperature();
-            sprintf(buffer, "%d", (temperature-32)*5/9);
+            temperature -= (temperature-_temperatureGetTemperature())/3;
+            sprintf(buffer, "%d", (temperature-40)*5/9);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
             sprintf(buffer, "%d%", (int) lux/300);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 92, OPAQUE_TEXT);
@@ -168,10 +168,18 @@ void TA1_0_IRQHandler(void)
             //todo: aggiungere
         }
         if (STATE == 1){
-            water_level = 100;
+            water_level = 70; //todo: get water level
             sprintf(buffer, "%d%", water_level);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
             timer = 0;
+
+            if (water_level < 15){ //se il livello dell'acqua è sotto 15%
+                _ledSetRGB(255, 0, 0);
+            }
+            else {
+                _ledSetRGB(0, 0, 0);
+            }
+
         }
 
     }
