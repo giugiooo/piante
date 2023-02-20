@@ -107,7 +107,6 @@ int main(void)
 
     _hwInit();
 
-
     _enableInterrupts();
 
     while (1)
@@ -121,11 +120,11 @@ int main(void)
 //main timer handler
 int temperature;
 int water_level;
-const int SAMPLE_DELAY = 10; //ogni quanto fare il sampling
-const int CHANGE_DISPLAY_DELAY = 30; //ogni quanto cambia la schermata
+const int SAMPLE_DELAY = 5; //ogni quanto fare il sampling
+const int CHANGE_DISPLAY_DELAY = 15; //ogni quanto cambia la schermata
 int timer = 0;
 int timer2 = CHANGE_DISPLAY_DELAY+1;
-int STATE = 0; //1 for temperature and water level, 2 for humidity and the other thing
+int STATE = 0; //1 for temperature and brightness, 2 for terrain humidity and water level
 char buffer[6];
 void TA1_0_IRQHandler(void)
 {
@@ -139,8 +138,7 @@ void TA1_0_IRQHandler(void)
             GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) "Temperature:", AUTO_STRING_LENGTH, 64, 12, OPAQUE_TEXT);
             GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
-            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Greenhouse", AUTO_STRING_LENGTH, 64, 62, OPAQUE_TEXT);
-            Graphics_drawStringCentered(&g_sContext, (int8_t *) "humidity", AUTO_STRING_LENGTH, 64, 72, OPAQUE_TEXT);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) "Brightness", AUTO_STRING_LENGTH, 64, 72, OPAQUE_TEXT);
         }
         if (STATE == 1){
             GrContextFontSet(&g_sContext, &g_sFontFixed6x8);
@@ -158,9 +156,13 @@ void TA1_0_IRQHandler(void)
     if (timer > SAMPLE_DELAY){
 
         if (STATE == 0){
+            lux = _lightGetLuxValue();
             temperature = _temperatureGetTemperature();
             sprintf(buffer, "%d", (temperature-32)*5/9);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
+            sprintf(buffer, "%d%", (int) lux/300);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 92, OPAQUE_TEXT);
+
             timer = 0;
 
             //todo: aggiungere
