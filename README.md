@@ -21,11 +21,15 @@ The features implemented and tested in the project are the following:
 #### water level sensor
 #### irrigation system
 #### esp8266mod
+#### humidity sensor
 #### breadboard and cables
 
 ### Software
 
 ## USER INTERACTION
+The user, through this object can understand whether the plant is located in an environment that consents it to live properly. The plant owner can see the information on the display inside the greenhouse and adjust the parameters that are not proper (for example by moving the greenhouse in a different place). If the user is far from the greenhouse he can still check if the plant is in good condition from a telegram bot called [greenhouse_mgmt_bot](https://t.me/greenhouse_mgmt_bot)
+
+
 ### Hardware/software interaction:
 
 ## presentation (video + slides)
