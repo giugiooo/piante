@@ -46,6 +46,7 @@
 #include "modules/light/light.h"
 #include <stdio.h>
 #include "modules/lcd/lcd.h"
+#include "modules/water_level/water_level.h"
 #include "modules/temperature/temperature.h"
 
 #define TIMER_PERIOD 11718
@@ -86,6 +87,7 @@ void _hwInit()
     _ledInit();
     _lightSensorInit();
     _temperatureSensorInit();
+    _waterSensorInit();
 
 }
 
@@ -98,7 +100,7 @@ void _enableInterrupts(){
         //Interrupt_enableSleepOnIsrExit();
         Interrupt_enableInterrupt(INT_TA1_0);
         Timer_A_startCounter(TIMER_A1_BASE, TIMER_A_UP_MODE);
-        //Interrupt_enableMaster(); //enable master interrupts*/
+        Interrupt_enableMaster(); //enable master interrupts*/
 }
 
 
@@ -119,7 +121,6 @@ int main(void)
 
 //main timer handler
 int temperature = 20;
-int water_level;
 const int SAMPLE_DELAY = 10; //ogni quanto fare il sampling
 const int CHANGE_DISPLAY_DELAY = 45; //ogni quanto cambia la schermata
 int timer = 0;
@@ -132,6 +133,7 @@ void TA1_0_IRQHandler(void)
     if (timer2 > CHANGE_DISPLAY_DELAY){
         STATE = (STATE == 0) ? 1 : 0; //cambia lo stato
         timer2 = 0;
+
 
         Graphics_clearDisplay(&g_sContext);
         if (STATE == 0){
@@ -158,22 +160,22 @@ void TA1_0_IRQHandler(void)
         if (STATE == 0){
             lux = _lightGetLuxValue();
             temperature -= (temperature-_temperatureGetTemperature())/3;
-            sprintf(buffer, "%d", (temperature-40)*5/9);
+            sprintf(buffer, "%dC", (temperature-40)*5/9);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
-            sprintf(buffer, "%d%", (int) lux/300);
+            sprintf(buffer, "%d'/,", (int) lux/300);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 92, OPAQUE_TEXT);
 
             timer = 0;
 
             //todo: aggiungere
         }
-        if (STATE == 1){
-            water_level = 70; //todo: get water level
-            sprintf(buffer, "%d%", water_level);
+        if (STATE == 1){ //todo: get water level
+            int water = _waterLevelGetValue();
+            sprintf(buffer, "%d'/,", water);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
             timer = 0;
 
-            if (water_level < 15){ //se il livello dell'acqua è sotto 15%
+            if (water < 15){ //se il livello dell'acqua è sotto 15%
                 _ledSetRGB(255, 0, 0);
             }
             else {
