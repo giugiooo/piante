@@ -10,7 +10,10 @@
 
 
 int water_level;
+int humidity;
 void _waterSensorInit();
+int _waterLevelGetValue();
+int _humidityGetHumidity();
 
 
 

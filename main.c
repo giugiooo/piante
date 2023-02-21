@@ -66,6 +66,10 @@ const Timer_A_UpModeConfig mainLoopTimerUpConfig =
 
 void _hwInit()
 {
+
+    GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN7);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN7);
+
     /* Halting WDT and disabling master interrupts */
     WDT_A_holdTimer();
 
@@ -118,6 +122,12 @@ int main(void)
 
 }
 
+//logica per quando irrigare la pianta
+int WATER_NEEDED = 0;
+const int SERVO_WATER_OPEN_TIME = 5;
+const int SERVO_WATER_CLOSE_TIME = 10;
+const int WATER_TRESHOLD = 45;
+int servo_timer = 0;
 
 //main timer handler
 int temperature = 20;
@@ -133,7 +143,6 @@ void TA1_0_IRQHandler(void)
     if (timer2 > CHANGE_DISPLAY_DELAY){
         STATE = (STATE == 0) ? 1 : 0; //cambia lo stato
         timer2 = 0;
-
 
         Graphics_clearDisplay(&g_sContext);
         if (STATE == 0){
@@ -155,36 +164,71 @@ void TA1_0_IRQHandler(void)
 
     }
 
+    if (WATER_NEEDED && servo_timer < SERVO_WATER_OPEN_TIME){
+        servo_timer++;
+        GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN7);
+    }
+    else if (WATER_NEEDED && servo_timer < SERVO_WATER_CLOSE_TIME+SERVO_WATER_OPEN_TIME){
+        servo_timer++;
+        GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN7);
+    }
+    else {
+        servo_timer = 0;
+        GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN7);
+    }
+
     if (timer > SAMPLE_DELAY){
 
+        lux = _lightGetLuxValue();
+        temperature -= (temperature-_temperatureGetTemperature())/3;
+        int water = _waterLevelGetValue();
+        int humidity = _humidityGetHumidity();
+
+        if (water < 15){ //se il livello dell'acqua è sotto 15%
+            WATER_NEEDED = 1;
+        }
+        else {
+            WATER_NEEDED = 0;
+            servo_timer = 0;
+        }
+        if (humidity < WATER_TRESHOLD && water > 5) {
+            WATER_NEEDED = 1;
+        }
+        if (humidity > WATER_TRESHOLD+5){
+            WATER_NEEDED = 0;
+            servo_timer = 0;
+        }
+        if (humidity < WATER_TRESHOLD && water > 15) {
+            _ledSetRGB(0, 0, 255);
+        }
+        if (water < 15 && humidity < 15){
+            _ledSetRGB(0, 0, 255);
+        }
+        if (humidity > WATER_TRESHOLD && water < 15){
+            _ledSetRGB(255, 0, 0);
+        }
+
         if (STATE == 0){
-            lux = _lightGetLuxValue();
-            temperature -= (temperature-_temperatureGetTemperature())/3;
             sprintf(buffer, "%dC", (temperature-40)*5/9);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
             sprintf(buffer, "%d'/,", (int) lux/300);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 92, OPAQUE_TEXT);
 
             timer = 0;
-
-            //todo: aggiungere
         }
-        if (STATE == 1){ //todo: get water level
-            int water = _waterLevelGetValue();
+        if (STATE == 1){
             sprintf(buffer, "%d'/,", water);
             Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 32, OPAQUE_TEXT);
+            sprintf(buffer, "%d'/,", humidity);
+            Graphics_drawStringCentered(&g_sContext, (int8_t *) buffer, AUTO_STRING_LENGTH, 64, 92, OPAQUE_TEXT);
+
             timer = 0;
 
-            if (water < 15){ //se il livello dell'acqua è sotto 15%
-                _ledSetRGB(255, 0, 0);
-            }
-            else {
-                _ledSetRGB(0, 0, 0);
-            }
 
         }
-
     }
+
+
 
     Timer_A_clearCaptureCompareInterrupt(TIMER_A1_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_0);
     timer++;

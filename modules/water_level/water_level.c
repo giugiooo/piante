@@ -38,7 +38,6 @@ char printBuffer[45];
 
 //Void Setup
 void _waterSensorInit(){
-            GPIO_setAsOutputPin(GPIO_PORT_P2,GPIO_PIN1);
 
             /* Configuring GPIOs (5.5 A0) */
             GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P5, GPIO_PIN4,
@@ -81,10 +80,8 @@ void _waterSensorInit(){
             //Interrupt_enableMaster();
 }
 
-int asd;
 void ADC14_IRQHandler(void)
 {
-    asd = 1;
     uint64_t status = ADC14_getEnabledInterruptStatus();
     ADC14_clearInterruptFlag(status);
 
@@ -92,24 +89,26 @@ void ADC14_IRQHandler(void)
     {
         /* should be berween 0 and 16384*/
         water_level = (int) ADC14_getResult(ADC_MEM0);
-        asd = ADC14_getResult(ADC_MEM1);
-        //asd = (int) ADC14_getResult(ADC_MEM1);
-
-        if(asd > 2500) {
-            GPIO_setOutputHighOnPin(GPIO_PORT_P2,GPIO_PIN1);
-        }
-        else
-            GPIO_setOutputLowOnPin(GPIO_PORT_P2,GPIO_PIN1);
+        humidity = ADC14_getResult(ADC_MEM1);
 
         /* next sample */
         ADC14_toggleConversionTrigger();
     }
 }
 
+const int MAX_HUMIDITY = 16000;
+const int MIN_HUMIDITY = 11500;
+
+int _humidityGetHumidity(){
+    int m = (MIN_HUMIDITY-MAX_HUMIDITY)/100;
+    int percentage = (humidity-MAX_HUMIDITY)/m;
+
+    if (percentage > 100) percentage = 100;
+    if (percentage < 0) percentage = 0;
+
+    return percentage;
+}
 int _waterLevelGetValue(){
-
-
-
 
 	if (water_level > 2750){
 	    if (water_level > 3500) {
