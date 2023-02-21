@@ -37,9 +37,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println();
- 
   pinMode(A0, INPUT);
-  
   if (!LittleFS.begin())
   {
     Serial.println("Failed to mount file system");
@@ -75,17 +73,17 @@ void setup()
 
 void loop()
 {
+   sensorValue = analogRead(analogInPin);
   if (millis() - bot_lasttime > BOT_MTBS)
   {
      // read the analog in value
-    sensorValue = analogRead(analogInPin);
+   
     if(sensorValue > 500){sendMessageToDennisGiuliaAndCarolina();}
-    bot_lasttime = millis();
+    bot_lasttime = millis();  
   }
 
    // print the readings in the Serial Monitor
-  Serial.print("sensor = ");
+  Serial.print("\n sensor = ");
   Serial.print(sensorValue);
   
-  delay(1000);
 }
