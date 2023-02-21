@@ -37,7 +37,9 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println();
-
+ 
+  pinMode(A0, INPUT);
+  
   if (!LittleFS.begin())
   {
     Serial.println("Failed to mount file system");
