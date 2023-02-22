@@ -47,6 +47,8 @@ This sensor is connected to the MSP432 and requires a power supply of 5V.
 
 #### Breadboard and cables
 
+Since more than one of the components needed a power supply from the board, we linked them to a breadboard in order to connect them all at once.
+
 ### Software requirements:
 - [MSP Driver Library](https://www.ti.com/tool/MSPDRIVERLIB) 
 - [MSP Graphics Library](https://www.ti.com/tool/MSP-GRLIB)
@@ -62,7 +64,11 @@ The user, through this object can understand whether the plant is located in an 
 A demonstration on how this project works can be viewed on [YouTube](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwibjbjdn6T9AhUxRfEDHa1FBm8QyCl6BAgZEAM&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ&usg=AOvVaw0aHtehaphMhOCAkCydRLZU).
 For additional infos check the [project slides](https://docs.google.com/presentation/d/1NzTzK7F4OtdL91AdtIMIIC9X2LwWOCKmxzR6OWZkVuw/edit#slide=id.p).
 
+## HOW DOES IT WORK?
+
+
 ## Group Members
+
 - Dennis Orlando
 - Giulia Modenese
 - Carolina Sopranzetti
