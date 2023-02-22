@@ -68,7 +68,9 @@ void _hwInit()
 {
 
     GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN7);
-    GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN7);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN7);
+    GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN5);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN5);
 
     /* Halting WDT and disabling master interrupts */
     WDT_A_holdTimer();
@@ -124,9 +126,9 @@ int main(void)
 
 //logica per quando irrigare la pianta
 int WATER_NEEDED = 0;
-const int SERVO_WATER_OPEN_TIME = 5;
-const int SERVO_WATER_CLOSE_TIME = 10;
-const int WATER_TRESHOLD = 45;
+const int SERVO_WATER_OPEN_TIME = 10;
+const int SERVO_WATER_CLOSE_TIME = 60;
+const int WATER_TRESHOLD = 100;
 int servo_timer = 0;
 
 //main timer handler
@@ -185,27 +187,31 @@ void TA1_0_IRQHandler(void)
         int humidity = _humidityGetHumidity();
 
         if (water < 15){ //se il livello dell'acqua è sotto 15%
-            WATER_NEEDED = 1;
+            GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN5);
         }
         else {
-            WATER_NEEDED = 0;
-            servo_timer = 0;
+            GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN5);
         }
         if (humidity < WATER_TRESHOLD && water > 5) {
             WATER_NEEDED = 1;
+            _ledSetRGB(255, 0, 0);
         }
-        if (humidity > WATER_TRESHOLD+5){
+        if (humidity > WATER_TRESHOLD+5 || water < 5){
             WATER_NEEDED = 0;
             servo_timer = 0;
         }
         if (humidity < WATER_TRESHOLD && water > 15) {
             _ledSetRGB(0, 0, 255);
         }
-        if (water < 15 && humidity < 15){
-            _ledSetRGB(0, 0, 255);
+        if (water < 15 && humidity < WATER_TRESHOLD){
+            _ledSetRGB(255, 0, 0);
         }
+
         if (humidity > WATER_TRESHOLD && water < 15){
             _ledSetRGB(255, 0, 0);
+        }
+        if (humidity > WATER_TRESHOLD && water > 15){
+            _ledSetRGB(0, 0, 0);
         }
 
         if (STATE == 0){
