@@ -1,6 +1,6 @@
 # WATERING GREENHOUSE - Project for the course "Embedded Software for the Internet of Things" (group 19)
 
-This project consists in a greenhouse connected to a display which provides informations about the environment inside the planthouse (temperature and brightness) and about the plants living inside of it (soil humidity). In addition to the monitoring process, the greenhouse is able to water the plants when needed and to notify the plant owner when compares any issue (eg. water tank needs to be refilled). 
+This project consists in a greenhouse connected to a display which provides informations about the environment inside the planthouse (temperature and brightness) and about the plants living inside of it (soil humidity). In addition to the monitoring process, the greenhouse is able to water the plants when needed and to notify the plant owner when the water tank needs to be refilled. 
 Our aim? Keeping a plant alive! 
 
 ## FEATURES:
@@ -11,29 +11,42 @@ The features implemented and tested in the project are the following:
 - checks if the soil is humid enough; 
 - erogates water from a water tank when the plant needs it;
 - notifies the plant owner when the water tank is empty;
-- displays informations about temperature/brightness of the environment and level of water in the tank
-- if the tank is almost empty a red led lights up in the greenhouse  
+- displays informations about temperature/brightness of the environment and level of water in the tank;
+- if the tank is almost empty a red led lights up in the greenhouse. 
 
 ## REQUIREMENTS:
 
 ### Hardware:
-#### Launchpad (temperature sensor, brightness sensor, display, button)
+#### MSP432P401R Board + Educational booster pack (temperature sensor, brightness sensor, display, button)
 ![7f2e25b1-6b96-4478-a5f6-b2deba43b8f4](https://user-images.githubusercontent.com/125813273/220143137-08dbf299-6d40-4c98-8e08-ed4ff01ec917.jpg)
+For our project we used MSP432P401R Board a microcontroller from Texas Instruments based on a 32-bit ARM Cortex-M4 CPU. The Educational Booster Pack with its additional hardware peripherals is also required.
+From the board we can gain informations about the temperature and the brightness of the environment. In addition to this, the board gives power to the irrigation system and the water level sensor and collects data from them. The data collected from the sensors on the board and from the water level sensor are displayed on the little screen in the greenhouse.
 
 #### water level sensor
 ![8576540a-a3fd-466c-9a5e-a5127a94cb02](https://user-images.githubusercontent.com/125813273/220143063-c5ae17d9-58fa-4e3f-a475-b6e7afbd0945.jpg)
+This component works attached to the board through cables and needs a power supply of 3.3V to operate. It sends informations to the boardd about the level of water present in the tank.
 
 #### irrigation system
+<img width="89" alt="Screenshot 2023-02-22 at 10 49 26" src="https://user-images.githubusercontent.com/125813273/220584504-597b0181-2cb6-44c6-892a-9d59dcc60fe0.png">
+This system consists in a motor servo that pumps water into a tube directioned into the plant vase. To work it needs a power supply of 5V taken from the board.
+
 #### esp8266mod
 ![b46767ec-107c-45f6-a34b-3b3b8a16733a](https://user-images.githubusercontent.com/125813273/220142992-f34b25a0-e398-498a-a5af-964661af01b0.jpg)
 
+
 #### humidity sensor
+![61am5IkMqzL _AC_SL1000_](https://user-images.githubusercontent.com/125813273/220584899-d9adf6d7-5242-4ef0-b605-24e3a3710126.jpg)
+This sensor is connected to the MSP432 and requires a power supply of 5V.
+
 #### breadboard and cables
 
 ### Software requirements:
 - [MSP Driver Library](https://www.ti.com/tool/MSPDRIVERLIB) 
 - [MSP Graphics Library](https://www.ti.com/tool/MSP-GRLIB)
 - [CCSTUDIO](https://www.ti.com/tool/CCSTUDIO)
+- [Arduino ide](https://www.arduino.cc/en/software)
+- [CH340G Driver](https://sparks.gogo.co.nz/ch340.html)
+- libraries for the arduino ide
 
 ## USER INTERACTION
 The user, through this object can understand whether the plant is located in an environment that consents it to live properly. The plant owner can see the information on the display inside the greenhouse and adjust the parameters that are not proper (for example by moving the greenhouse in a different place). If the user is far from the greenhouse he can still check if the plant is in good condition from a telegram bot called [greenhouse_mgmt_bot](https://t.me/greenhouse_mgmt_bot).
