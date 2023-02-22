@@ -19,26 +19,30 @@ The features implemented and tested in the project are the following:
 ### Hardware:
 #### MSP432P401R Board + Educational booster pack (temperature sensor, brightness sensor, display, button)
 ![7f2e25b1-6b96-4478-a5f6-b2deba43b8f4](https://user-images.githubusercontent.com/125813273/220143137-08dbf299-6d40-4c98-8e08-ed4ff01ec917.jpg)
+
 For our project we used MSP432P401R Board a microcontroller from Texas Instruments based on a 32-bit ARM Cortex-M4 CPU. The Educational Booster Pack with its additional hardware peripherals is also required.
 From the board we can gain informations about the temperature and the brightness of the environment. In addition to this, the board gives power to the irrigation system and the water level sensor and collects data from them. The data collected from the sensors on the board and from the water level sensor are displayed on the little screen in the greenhouse.
 
-#### water level sensor
+#### Water level sensor
 ![8576540a-a3fd-466c-9a5e-a5127a94cb02](https://user-images.githubusercontent.com/125813273/220143063-c5ae17d9-58fa-4e3f-a475-b6e7afbd0945.jpg)
+
 This component works attached to the board through cables and needs a power supply of 3.3V to operate. It sends informations to the boardd about the level of water present in the tank.
 
-#### irrigation system
+#### Irrigation system
 <img width="89" alt="Screenshot 2023-02-22 at 10 49 26" src="https://user-images.githubusercontent.com/125813273/220584504-597b0181-2cb6-44c6-892a-9d59dcc60fe0.png">
+
 This system consists in a motor servo that pumps water into a tube directioned into the plant vase. To work it needs a power supply of 5V taken from the board.
 
-#### esp8266mod
+#### ESP8266mod
 ![b46767ec-107c-45f6-a34b-3b3b8a16733a](https://user-images.githubusercontent.com/125813273/220142992-f34b25a0-e398-498a-a5af-964661af01b0.jpg)
 
 
-#### humidity sensor
+#### Humidity sensor
 ![61am5IkMqzL _AC_SL1000_](https://user-images.githubusercontent.com/125813273/220584899-d9adf6d7-5242-4ef0-b605-24e3a3710126.jpg)
+
 This sensor is connected to the MSP432 and requires a power supply of 5V.
 
-#### breadboard and cables
+#### Breadboard and cables
 
 ### Software requirements:
 - [MSP Driver Library](https://www.ti.com/tool/MSPDRIVERLIB) 
@@ -59,13 +63,3 @@ For additional infos check the [project slides](https://docs.google.com/presenta
 - Dennis Orlando
 - Giulia Modenese
 - Carolina Sopranzetti
-
-##### Glossario:
-- "l'amico": MSP432P401R Board
-- "amici dell'amico": elementi, connessi all'amico, che interagiranno con esso
-
-### Todo:
-- [ ] Definire quali elementi andranno ad interagire con l'amico
-- [ ] Implementare il codice per interagire con l'amico
-- [ ] Connettere effettivamente l'amico ai suoi amici
-
