@@ -33,17 +33,16 @@ This component works attached to the board through cables and needs a power supp
 
 This system consists in a motor servo that pumps water into a tube directioned into the plant vase. To work it needs a power supply of 5V taken from the board.
 
+#### Humidity sensor
+![5e63f190-ab91-49c9-b75f-c24799924b42](https://user-images.githubusercontent.com/125813273/220603239-5898ac4f-d226-4670-aeb2-7822c008da19.jpg)
+
+This sensor is connected to the MSP432 and requires a power supply of 5V.
+
 #### ESP8266mod
 ![b46767ec-107c-45f6-a34b-3b3b8a16733a](https://user-images.githubusercontent.com/125813273/220142992-f34b25a0-e398-498a-a5af-964661af01b0.jpg)
 
 In our project the ESP8266 is used as a Serial-to-WiFi bridge linked to a telegram bot ( [greenhouse_mgmt_bot](https://t.me/greenhouse_mgmt_bot) ). It gains its power from a microusb cable connected to a computer and it is linked to the msp430 board through a female-female cable. 
 In order to connect it to wifi we need to write a code on it using the arduino ide. 
-
-
-#### Humidity sensor
-![61am5IkMqzL _AC_SL1000_](https://user-images.githubusercontent.com/125813273/220584899-d9adf6d7-5242-4ef0-b605-24e3a3710126.jpg)
-
-This sensor is connected to the MSP432 and requires a power supply of 5V.
 
 #### Breadboard and cables
 
