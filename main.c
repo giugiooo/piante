@@ -103,10 +103,10 @@ void _hwInit()
 void _enableInterrupts(){
     // Initialize main interrupt stuff
         Timer_A_configureUpMode(TIMER_A1_BASE, &mainLoopTimerUpConfig);
-        //Interrupt_enableSleepOnIsrExit();
         Interrupt_enableInterrupt(INT_TA1_0);
         Timer_A_startCounter(TIMER_A1_BASE, TIMER_A_UP_MODE);
-        Interrupt_enableMaster(); //enable master interrupts*/
+        //enable master interrupts
+        Interrupt_enableMaster(); 
 }
 
 
@@ -124,26 +124,31 @@ int main(void)
 
 }
 
-//logica per quando irrigare la pianta
-int WATER_NEEDED = 0;
+//logic to water the plants
+//constants
 const int SERVO_WATER_OPEN_TIME = 10;
 const int SERVO_WATER_CLOSE_TIME = 60;
 const int WATER_TRESHOLD = 100;
+//variables
+int WATER_NEEDED = 0;
 int servo_timer = 0;
 
 //main timer handler
+
+const int SAMPLE_DELAY = 10; //how often to do sampling
+const int CHANGE_DISPLAY_DELAY = 45; //timing of chaning display
+
 int temperature = 20;
-const int SAMPLE_DELAY = 10; //ogni quanto fare il sampling
-const int CHANGE_DISPLAY_DELAY = 45; //ogni quanto cambia la schermata
 int timer = 0;
-int timer2 = CHANGE_DISPLAY_DELAY+1;
+int timer2 = CHANGE_DISPLAY_DELAY + 1;
 int STATE = 0; //1 for temperature and brightness, 2 for terrain humidity and water level
 char buffer[6];
+
 void TA1_0_IRQHandler(void)
 {
 
     if (timer2 > CHANGE_DISPLAY_DELAY){
-        STATE = (STATE == 0) ? 1 : 0; //cambia lo stato
+        STATE = (STATE == 0) ? 1 : 0; //state changing
         timer2 = 0;
 
         Graphics_clearDisplay(&g_sContext);
@@ -161,8 +166,8 @@ void TA1_0_IRQHandler(void)
             Graphics_drawStringCentered(&g_sContext, (int8_t *) "humidity", AUTO_STRING_LENGTH, 64, 72, OPAQUE_TEXT);
         }
 
-        timer = SAMPLE_DELAY +1; //aggiornamento forzato
-        GrContextFontSet(&g_sContext, &g_sFontCmss36b); //font grande in modo che le successive volte che scrivi qualcosa vengono fuori i numeri grandi
+        timer = SAMPLE_DELAY +1; //forced upgrade
+        GrContextFontSet(&g_sContext, &g_sFontCmss36b); //font size
 
     }
 
