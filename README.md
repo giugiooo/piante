@@ -245,7 +245,33 @@ For additional infos check the [project slides](https://docs.google.com/presenta
     	}
     }
     ```
+	- servo logic (the servo is connected via a transistor through P4.7):
+	```C
+	/* main.c /*
+	//constants
+	const int SERVO_WATER_OPEN_TIME = 10;
+	const int SERVO_WATER_CLOSE_TIME = 60;
+	const int WATER_TRESHOLD = 100;
+	//variables
+	int WATER_NEEDED = 0;
+	int servo_timer = 0;
 
+	  //water
+	  if (WATER_NEEDED && servo_timer < SERVO_WATER_OPEN_TIME){
+	        servo_timer++;
+	        GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN7);
+	    }
+	    //stop watering
+	    else if (WATER_NEEDED && servo_timer < SERVO_WATER_CLOSE_TIME+SERVO_WATER_OPEN_TIME){
+ 	       servo_timer++;
+ 	       GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN7);
+ 	   }
+ 	   // water is not needed, therefore stop watering
+ 	   else {
+ 	       servo_timer = 0;
+ 	       GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN7);
+ 	   }
+	```
 
 
 ## Group Members
