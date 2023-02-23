@@ -228,14 +228,14 @@ For additional infos check the [project slides](https://docs.google.com/presenta
        int m = (MIN_HUMIDITY-MAX_HUMIDITY)/100;
        int percentage = (humidity-MAX_HUMIDITY)/m;
 
-      if (percentage > 100) percentage = 100;
+       if (percentage > 100) percentage = 100;
        if (percentage < 0) percentage = 0;
 
        return percentage;
     }
     int _waterLevelGetValue(){
 
-    	if (water_level > 2750){
+        if (water_level > 2750){
 	        if (water_level > 3500) {
 	            return 100;
 	        }
@@ -259,7 +259,9 @@ For additional infos check the [project slides](https://docs.google.com/presenta
 	//variables
 	int WATER_NEEDED = 0;
 	int servo_timer = 0;
-
+	...
+	...
+	...
 	  //water
 	  if (WATER_NEEDED && servo_timer < SERVO_WATER_OPEN_TIME){
 	        servo_timer++;
