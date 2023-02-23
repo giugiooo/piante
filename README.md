@@ -74,8 +74,9 @@ For additional infos check the [project slides](https://docs.google.com/presenta
     - for measuring heat, we make use of HAL_TMP006, a library given by the Texas Instruments
 
 
-- water & humidity
-    - 
+- water & humidity & servo : external sensor that we connected by initialiting free analog pins of the BoosterPack (A0, A1, A2, A3) that on the MSP432 LaunchPad coincide with (P5.5, P5.4, P4.7, P4.5), in order to gather the sensors values.
+
+
 
 ## Group Members
 
