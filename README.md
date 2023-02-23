@@ -54,7 +54,7 @@ Since more than one of the components needed a power supply from the board, we l
 - [CCSTUDIO](https://www.ti.com/tool/CCSTUDIO)
 - [Arduino ide](https://www.arduino.cc/en/software)
 - [CH340G Driver](https://sparks.gogo.co.nz/ch340.html)
-- libraries for the arduino ide
+- [libraries for the arduino ide](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsuperedo.it%2Fwp-content%2Fuploads%2F2020%2F06%2F26537922438_9808e3a404_k.jpg&f=1&nofb=1&ipt=dd2b137720bbd854a709182a1514d4c9b1cc70f703b550fc87ca92d29decc15c&ipo=images)
 
 ## USER INTERACTION
 The user, through this object can understand whether the plant is located in an environment that consents it to live properly. The plant owner can see the information on the display inside the greenhouse and adjust the parameters that are not proper (for example by moving the greenhouse in a different place). If the user is far from the greenhouse he can still check if the plant is in good condition from a telegram bot called [greenhouse_mgmt_bot](https://t.me/greenhouse_mgmt_bot).
@@ -64,7 +64,10 @@ A demonstration on how this project works can be viewed on [YouTube](https://www
 For additional infos check the [project slides](https://docs.google.com/presentation/d/1NzTzK7F4OtdL91AdtIMIIC9X2LwWOCKmxzR6OWZkVuw/edit#slide=id.p).
 
 ## HOW DOES IT WORK?
-
+- led
+- light & temperature
+- water & humidity
+- main
 
 ## Group Members
 
