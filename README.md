@@ -66,7 +66,70 @@ For additional infos check the [project slides](https://docs.google.com/presenta
 ## HOW DOES IT WORK?
 - led : we toggle led for two different actions
     - the blue one is used when the water pump is active 
-    - instead we toggle the red led when the water level is under 10% 
+    - we toggle the red led when the water level is under 15% 
+    - initialize PWM timer:
+    ```C
+    /* modules/led/led.c */
+    Timer_A_CompareModeConfig compareConfig_PWM = {
+        TIMER_A_CAPTURECOMPARE_REGISTER_1,          // Use CCR3
+        TIMER_A_CAPTURECOMPARE_INTERRUPT_DISABLE,   // Disable CCR interrupt
+        TIMER_A_OUTPUTMODE_TOGGLE_SET,              // Toggle output but
+        50                                        // 50% Duty Cycle
+        };
+        
+    const Timer_A_UpModeConfig upConfig = {
+        TIMER_A_CLOCKSOURCE_SMCLK,                      // SMCLK = 3 MhZ
+        TIMER_A_CLOCKSOURCE_DIVIDER_12,         // SMCLK/12 = 250 KhZ
+        100000,                                  // 40 ms tick period
+        TIMER_A_TAIE_INTERRUPT_DISABLE,         // Disable Timer interrupt
+        TIMER_A_CCIE_CCR0_INTERRUPT_DISABLE,    // Disable CCR0 interrupt
+        TIMER_A_DO_CLEAR                        // Clear value
+        };
+    ```
+    - configure and start timer; configure ports:
+    ```C
+    /* modules/led/led.c */
+    /* Configures P2.4 (red led) to PM_TA0.1 for using Timer PWM to control LED */
+    GPIO_setAsPeripheralModuleFunctionOutputPin(GPIO_PORT_P2, GPIO_PIN4,
+    GPIO_PRIMARY_MODULE_FUNCTION);
+    ...
+    /* Configuring Timer_A0 for Up Mode and starting */
+    Timer_A_configureUpMode(TIMER_A0_BASE, &upConfig);
+    Timer_A_startCounter(TIMER_A0_BASE, TIMER_A_UP_MODE);
+    ...
+    compareConfig_PWM.compareRegister = TIMER_A_CAPTURECOMPARE_REGISTER_3;
+    compareConfig_PWM.compareValue = 5;
+    Timer_A_initCompare(TIMER_A0_BASE, &compareConfig_PWM);
+    ```
+    - main logic:
+    ```C
+    /* main.c */
+    if (timer > SAMPLE_DELAY){
+    ...
+      if (humidity < WATER_TRESHOLD && water > 5) {
+            WATER_NEEDED = 1;
+            _ledSetRGB(255, 0, 0);
+      }
+      if (humidity > WATER_TRESHOLD+5 || water < 5){
+            WATER_NEEDED = 0;
+            servo_timer = 0;
+       }
+       if (humidity < WATER_TRESHOLD && water > 15) {
+            _ledSetRGB(0, 0, 255);
+       }
+       if (water < 15 && humidity < WATER_TRESHOLD){
+            _ledSetRGB(255, 0, 0);
+       }
+
+       if (humidity > WATER_TRESHOLD && water < 15){
+            _ledSetRGB(255, 0, 0);
+       }
+       if (humidity > WATER_TRESHOLD && water > 15){
+            _ledSetRGB(0, 0, 0);
+       }
+    ...
+    }
+    ```
 
 
 - light & temperature : we use the sensors present in the boosterPack MKII to monitor temperature and brightness within the greenhouse environment.
