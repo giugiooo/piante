@@ -32,6 +32,7 @@ This component works attached to the board through cables and needs a power supp
 <img width="89" alt="Screenshot 2023-02-22 at 10 49 26" src="https://user-images.githubusercontent.com/125813273/220584504-597b0181-2cb6-44c6-892a-9d59dcc60fe0.png">
 
 This system consists in a motor servo that pumps water into a tube directioned into the plant vase. To work it needs a power supply of 5V taken from the board.
+To solve control problems due to the water servo, we used a transistor, which is controlled by the P4.7 (J3.28) pin on the BoosterPack MKII
 
 #### Humidity sensor
 ![5e63f190-ab91-49c9-b75f-c24799924b42](https://user-images.githubusercontent.com/125813273/220603239-5898ac4f-d226-4670-aeb2-7822c008da19.jpg)
