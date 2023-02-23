@@ -39,6 +39,7 @@
 //
 //****************************************************************************
 
+#include <modules/water/water.h>
 #include <ti/devices/msp432p4xx/inc/msp.h>
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/grlib/grlib.h>
@@ -46,7 +47,6 @@
 #include "modules/light/light.h"
 #include <stdio.h>
 #include "modules/lcd/lcd.h"
-#include "modules/water_level/water_level.h"
 #include "modules/temperature/temperature.h"
 
 #define TIMER_PERIOD 11718

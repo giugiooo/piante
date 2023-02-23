@@ -5,8 +5,8 @@
  *      Author: dennis_orlando
  */
 
-#ifndef MODULES_WATER_LEVEL_WATER_LEVEL_H_
-#define MODULES_WATER_LEVEL_WATER_LEVEL_H_
+#ifndef MODULES_WATER_WATER_H_
+#define MODULES_WATER_WATER_H_
 
 
 int water_level;
@@ -17,4 +17,4 @@ int _humidityGetHumidity();
 
 
 
-#endif /* MODULES_WATER_LEVEL_WATER_LEVEL_H_ */
+#endif /* MODULES_WATER_WATER_H_ */
