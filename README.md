@@ -64,7 +64,8 @@ A demonstration on how this project works can be viewed on [YouTube](https://www
 For additional infos check the [project slides](https://docs.google.com/presentation/d/1NzTzK7F4OtdL91AdtIMIIC9X2LwWOCKmxzR6OWZkVuw/edit#slide=id.p).
 
 ## HOW DOES IT WORK?
-- **led** : we toggle led for two different actions
+- **LED** : 
+	we toggle led for two different actions
 
     - the blue one is used when the water pump is active 
     - we toggle the red led when the water level is under 15% 
@@ -133,7 +134,8 @@ For additional infos check the [project slides](https://docs.google.com/presenta
     ```
 
 
-- **light & temperature** : we use the sensors already present in the boosterPack MKII to monitor temperature and brightness within the greenhouse environment.
+- **LIGHT & TEMPERATURE** : 
+	we use the sensors already present in the boosterPack MKII to monitor temperature and brightness within the greenhouse environment.
 
     - to measure the temperature, we make use of HAL_TMP006, a library given by Texas Instruments:
     ```C
@@ -171,7 +173,8 @@ For additional infos check the [project slides](https://docs.google.com/presenta
     ```
 
 
-- **water & humidity & servo** : external sensor that we connected by initialiting free analog pins of the BoosterPack (A0, A1, A2, A3) that on the MSP432 LaunchPad coincide with (P5.5, P5.4, P4.7, P4.5), in order to gather the sensors values.
+- **WATER LEVEL & HUMIDITY & SERVO** : 
+	external sensor that we connected by initialiting free analog pins of the BoosterPack (A0, A1, A2, A3) that on the MSP432 LaunchPad coincide with (P5.5, P5.4, P4.7, P4.5), in order to gather the sensors values.
 
 	-initialize ADC sampling:
     ```C
