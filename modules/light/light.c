@@ -7,9 +7,6 @@
 
 //Variable for storing lux value returned from OPT3001
 
-
-//funzioni che dobbiamo usare
-
 void _lightSensorInit()
 {
     /* Initialize I2C communication */
@@ -21,7 +18,7 @@ void _lightSensorInit()
 
 }
 
-//hai valore luce ma non lo visualizzi da nessuna parte --> bisogna stamparlo a schermo
+//visualize on display brightness value
 float _lightGetLuxValue()
 {
     return OPT3001_getLux();
