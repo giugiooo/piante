@@ -69,8 +69,9 @@ For additional infos check the [project slides](https://docs.google.com/presenta
     - instead we toggle the red led when the water level is under 10% 
 
 
-- light & temperature : we use the sensors present in the boosterPack MKII
-    - c
+- light & temperature : we use the sensors present in the boosterPack MKII to monitor temperature and brightness within the greenhouse environment.
+    - for sampling light level values, we make use of HAL_OPT3001, a library given by the Texas Instruments
+    - for measuring heat, we make use of HAL_TMP006, a library given by the Texas Instruments
 
 
 - water & humidity
