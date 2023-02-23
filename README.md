@@ -247,7 +247,7 @@ For additional infos check the [project slides](https://docs.google.com/presenta
     ```
 	- servo logic (the servo is connected via a transistor through P4.7):
 	```C
-	/* main.c /*
+	/* main.c */
 	//constants
 	const int SERVO_WATER_OPEN_TIME = 10;
 	const int SERVO_WATER_CLOSE_TIME = 60;
