@@ -132,9 +132,41 @@ For additional infos check the [project slides](https://docs.google.com/presenta
     ```
 
 
-- light & temperature : we use the sensors present in the boosterPack MKII to monitor temperature and brightness within the greenhouse environment.
-    - for sampling light level values, we make use of HAL_OPT3001, a library given by the Texas Instruments
-    - for measuring heat, we make use of HAL_TMP006, a library given by the Texas Instruments
+- light & temperature : we use the sensors already present in the boosterPack MKII to monitor temperature and brightness within the greenhouse environment.
+    - to measure the temperature, we make use of HAL_TMP006, a library given by Texas Instruments:
+    ```C
+    /* modules/temperature/temperature.c */
+
+    void _temperatureSensorInit()
+    {
+        /* Initialize I2C communication */
+        /* Initialize TMP006 temperature sensor */
+        TMP006_init();
+    }
+
+    int _temperatureGetTemperature(){
+        return (int) TMP006_getTemp();
+    }
+    ```
+    - to sample the light level values, we make use of HAL_TMP006, also given by T.I.:
+    ```C
+    /* modules/light/light.c */
+
+    void _lightSensorInit()
+    {
+        /* Initialize I2C communication */
+        Init_I2C_GPIO();
+        I2C_init();
+        
+        /* Initialize OPT3001 digital ambient light sensor */
+        OPT3001_init();
+    }
+
+    //visualize on display brightness value
+    float _lightGetLuxValue() {
+        return OPT3001_getLux();
+    }
+    ``
 
 
 - water & humidity & servo : external sensor that we connected by initialiting free analog pins of the BoosterPack (A0, A1, A2, A3) that on the MSP432 LaunchPad coincide with (P5.5, P5.4, P4.7, P4.5), in order to gather the sensors values.
