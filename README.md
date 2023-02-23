@@ -67,8 +67,12 @@ For additional infos check the [project slides](https://docs.google.com/presenta
 - led : we toggle led for two different actions
     - the blue one is used when the water pump is active 
     - instead we toggle the red led when the water level is under 10% 
+
+
 - light & temperature : we use the sensors present in the boosterPack MKII
-    - 
+    - c
+
+
 - water & humidity
     - 
 
