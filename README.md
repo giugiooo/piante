@@ -64,10 +64,13 @@ A demonstration on how this project works can be viewed on [YouTube](https://www
 For additional infos check the [project slides](https://docs.google.com/presentation/d/1NzTzK7F4OtdL91AdtIMIIC9X2LwWOCKmxzR6OWZkVuw/edit#slide=id.p).
 
 ## HOW DOES IT WORK?
-- led --> we toggle led for two different actions: the blue one is used when it is in action the water pump instead we toggle the red led when the water level is under 10% 
-- light & temperature
+- led : we toggle led for two different actions
+    - the blue one is used when the water pump is active 
+    - instead we toggle the red led when the water level is under 10% 
+- light & temperature : we use the sensors present in the boosterPack MKII
+    - 
 - water & humidity
-- main
+    - 
 
 ## Group Members
 
