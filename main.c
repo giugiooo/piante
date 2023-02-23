@@ -191,7 +191,7 @@ void TA1_0_IRQHandler(void)
         int water = _waterLevelGetValue();
         int humidity = _humidityGetHumidity();
 
-        if (water < 15){ //se il livello dell'acqua è sotto 15%
+        if (water < 15){ //if water level under 15%
             GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN5);
         }
         else {
