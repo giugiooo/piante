@@ -43,7 +43,7 @@ This sensor is connected to the MSP432 and requires a power supply of 5V.
 #### ESP8266mod
 ![b46767ec-107c-45f6-a34b-3b3b8a16733a](https://user-images.githubusercontent.com/125813273/220142992-f34b25a0-e398-498a-a5af-964661af01b0.jpg)
 
-In our project the ESP8266 is used as a Serial-to-WiFi bridge linked to a telegram bot ( [greenhouse_mgmt_bot](https://t.me/greenhouse_mgmt_bot) ). It gains its power from a microusb cable connected to a computer and it is linked to the msp430 board through a female-female cable. 
+In our project the ESP8266 is used as a WiFi bridge linked to a telegram bot ( [greenhouse_mgmt_bot](https://t.me/greenhouse_mgmt_bot) ). It gains its power from a microusb cable connected to a computer and it is linked to the msp430 board through a female-female cable. 
 In order to connect it to wifi we need to write a code on it using the arduino ide. 
 
 #### Breadboard and cables
