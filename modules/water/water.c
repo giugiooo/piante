@@ -2,14 +2,6 @@
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/devices/msp432p4xx/inc/msp.h>
 
-//Global Constants
-//if TapWater there is no conductibility so values change 
-const bool tapWater = true;
- 
-//Global variables
-int HistoryValue = 0;
-char printBuffer[45];
-
 //Void Setup
 void _waterSensorInit(){
 
