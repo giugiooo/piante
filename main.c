@@ -192,7 +192,7 @@ void TA1_0_IRQHandler(void)
         int humidity = _humidityGetHumidity();
 
         if (water < 15){ //if water level under 15%
-            GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN5);
+            GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN5); //send telegram message
         }
         else {
             GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN5);
