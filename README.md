@@ -62,7 +62,7 @@ Since more than one of the components needed a power supply from the board, we l
 The user, through this object can understand whether the plant is located in an environment that consents it to live properly. The plant owner can see the information on the display inside the greenhouse and adjust the parameters that are not proper (for example by moving the greenhouse in a different place). If the user is far from the greenhouse he can still check if the plant is in good condition from a telegram bot called [greenhouse_mgmt_bot](https://t.me/greenhouse_mgmt_bot).
 
 ## Presentation (video + slides)
-A demonstration on how this project works can be viewed on [YouTube](https://www.youtube.com/watch?v=99_6oLbSlws).
+A demonstration on how this project works can be viewed on [YouTube](https://www.youtube.com/watch?v=4VHNqMMsBrQ).
 For additional infos check the [project slides](https://docs.google.com/presentation/d/1NzTzK7F4OtdL91AdtIMIIC9X2LwWOCKmxzR6OWZkVuw/edit#slide=id.p).
 
 ## HOW DOES IT WORK?
